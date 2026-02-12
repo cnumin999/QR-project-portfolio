@@ -82,7 +82,7 @@ export function Hero() {
           }`}>
             <Calendar className="w-4 h-4 text-cyan-500" />
             <span className={`text-sm ${darkMode ? "text-gray-300" : "text-slate-600"}`}>
-              2024.12 - 2025.02
+              2025.12 - 2026.01
             </span>
           </div>
           <div className={`flex items-center gap-2 px-4 py-2 rounded-lg border ${
