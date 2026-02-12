@@ -11,6 +11,9 @@ interface ProgressCategory {
   icon: typeof CheckCircle;
   color: string;
   bgColor: string;
+  lightText: string;
+  lightSubText: string;
+  lightItemBg: string;
   items: ProgressItem[];
 }
 
@@ -20,6 +23,9 @@ const progressData: ProgressCategory[] = [
     icon: CheckCircle,
     color: "text-emerald-400",
     bgColor: "bg-emerald-400/10 border-emerald-400/30",
+    lightText: "text-emerald-600",
+    lightSubText: "text-emerald-500",
+    lightItemBg: "bg-emerald-50",
     items: [
       { text: "생산 데이터 입력 및 시리얼 생성", subtext: "웹 입력 + 엑셀 자동 업로드" },
       { text: "QC 3단계 검사 데이터 입력·조회", subtext: "1st/2nd/Final 모두 구현" },
@@ -35,6 +41,9 @@ const progressData: ProgressCategory[] = [
     icon: Settings,
     color: "text-yellow-400",
     bgColor: "bg-yellow-400/10 border-yellow-400/30",
+    lightText: "text-yellow-600",
+    lightSubText: "text-yellow-500",
+    lightItemBg: "bg-yellow-50",
     items: [
       { text: "고객 피드백 서비스", subtext: "기능 완료, 테스트 후 정식 오픈 예정" },
       { text: "데이터 자동 동기화", subtext: "스크립트 완성, 윈도우 작업 스케줄러 등록 필요" },
@@ -47,6 +56,9 @@ const progressData: ProgressCategory[] = [
     icon: Clock,
     color: "text-gray-400",
     bgColor: "bg-gray-400/10 border-gray-400/30",
+    lightText: "text-gray-600",
+    lightSubText: "text-gray-500",
+    lightItemBg: "bg-gray-100",
     items: [
       { text: "영업/물류 프로세스", subtext: "출하·납품 관리 기능" },
       { text: "교체 주기 알림", subtext: "고객 대상 사전 알림 발송" },
@@ -56,7 +68,7 @@ const progressData: ProgressCategory[] = [
 ];
 
 const infraData = [
-  { label: "서비스 URL", value: "http://127.0.0.1:3000" },
+  { label: "서비스 URL", value: "http://0.0.0.0:xxxx" },
   { label: "서버 OS", value: "Windows Server" },
   { label: "데이터베이스", value: "MySQL" },
   { label: "웹 서버", value: "Node.js (Express)" },
@@ -68,117 +80,87 @@ export function ProgressSection() {
   const percentage = Math.round((completedItems / totalItems) * 100);
 
   return (
-    <section id="progress" className="py-20 px-4">
+    <section id="progress" className="py-20 px-4 bg-white dark:bg-transparent">
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-12"
-        >
+
+        {/* 제목 */}
+        <div className="mb-12">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-1 h-8 rounded bg-gradient-to-b from-cyan-400 to-purple-600" />
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+            <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 dark:text-white">
               현재 진행 상태
             </h2>
           </div>
-          <p className="text-gray-400 ml-6">프로젝트 진척도</p>
-        </motion.div>
+          <p className="text-slate-500 dark:text-gray-400 ml-6">프로젝트 진척도</p>
+        </div>
 
-        {/* Progress Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-12 p-6 rounded-2xl bg-white/5 border border-white/10"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-lg font-bold text-white">전체 진행률</span>
+        {/* 진행률 */}
+        <div className="mb-12 p-6 rounded-2xl border bg-slate-50 border-slate-200 dark:bg-white/5 dark:border-white/10">
+          <div className="flex justify-between mb-4">
+            <span className="text-lg font-bold text-slate-800 dark:text-white">
+              전체 진행률
+            </span>
             <span className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
               {percentage}%
             </span>
           </div>
-          <div className="h-4 rounded-full bg-slate-700 overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              whileInView={{ width: `${percentage}%` }}
-              viewport={{ once: true }}
-              transition={{ duration: 1.5, ease: "easeOut" }}
+          <div className="h-4 rounded-full bg-slate-300 dark:bg-slate-700 overflow-hidden">
+            <div
               className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-purple-500"
+              style={{ width: `${percentage}%` }}
             />
           </div>
-          <div className="flex justify-between mt-2 text-sm text-gray-400">
-            <span>완료: {completedItems}개</span>
-            <span>전체: {totalItems}개</span>
-          </div>
-        </motion.div>
+        </div>
 
-        {/* Progress Categories */}
+        {/* 상태 카드 */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-          {progressData.map((category, catIndex) => (
-            <motion.div
+          {progressData.map((category) => (
+            <div
               key={category.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: catIndex * 0.1 }}
-              className={`p-6 rounded-2xl border ${category.bgColor}`}
+              className={`p-6 rounded-2xl border 
+              ${category.bgColor} 
+              dark:${category.bgColor}`}
             >
               <div className="flex items-center gap-3 mb-6">
                 <category.icon className={`w-6 h-6 ${category.color}`} />
-                <h3 className={`text-lg font-bold ${category.color}`}>{category.title}</h3>
-                <span className={`ml-auto text-sm font-bold ${category.color}`}>
-                  {category.items.length}
-                </span>
+                <h3 className={`text-lg font-bold ${category.lightText} dark:${category.color}`}>
+                  {category.title}
+                </h3>
               </div>
+
               <div className="space-y-3">
                 {category.items.map((item, index) => (
-                  <motion.div
+                  <div
                     key={index}
-                    initial={{ opacity: 0, x: -10 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                    className="p-3 rounded-lg bg-slate-900/30"
+                    className={`p-3 rounded-lg 
+                    ${category.lightItemBg} 
+                    dark:bg-slate-900/30`}
                   >
-                    <p className="text-white text-sm">{item.text}</p>
+                    <p className={`text-sm font-medium ${category.lightText} dark:text-white`}>
+                      {item.text}
+                    </p>
                     {item.subtext && (
-                      <p className="text-gray-500 text-xs mt-1">{item.subtext}</p>
+                      <p className={`text-xs mt-1 ${category.lightSubText} dark:text-gray-500`}>
+                        {item.subtext}
+                      </p>
                     )}
-                  </motion.div>
+                  </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
-        {/* Infrastructure */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="p-6 rounded-2xl bg-white/5 border border-white/10"
-        >
+        {/* 인프라 */}
+        <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200 dark:bg-white/5 dark:border-white/10">
           <div className="flex items-center gap-3 mb-6">
-            <AlertCircle className="w-6 h-6 text-blue-400" />
-            <h3 className="text-lg font-bold text-white">인프라 현황</h3>
+            <AlertCircle className="w-6 h-6 text-blue-500 dark:text-blue-400" />
+            <h3 className="text-lg font-bold text-slate-800 dark:text-white">
+              인프라 현황
+            </h3>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {infraData.map((item, index) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="p-4 rounded-xl bg-slate-900/50 text-center"
-              >
-                <p className="text-gray-500 text-xs mb-1">{item.label}</p>
-                <p className="text-cyan-400 font-mono text-sm break-all">{item.value}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        </div>
+
       </div>
     </section>
   );
