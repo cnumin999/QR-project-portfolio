@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { CheckCircle, Settings, Clock, AlertCircle } from "lucide-react";
-import { useTheme } from "../App";
 
 interface ProgressItem {
   text: string;
@@ -64,22 +63,13 @@ const infraData = [
 ];
 
 export function ProgressSection() {
-  const { darkMode } = useTheme();
-
   const totalItems = progressData.reduce((acc, cat) => acc + cat.items.length, 0);
   const completedItems = progressData[0].items.length;
   const percentage = Math.round((completedItems / totalItems) * 100);
 
   return (
-    <section
-      id="progress"
-      className={`py-20 px-4 ${
-        darkMode ? "bg-slate-950 text-white" : "bg-white text-slate-800"
-      }`}
-    >
+    <section id="progress" className="py-20 px-4">
       <div className="max-w-7xl mx-auto">
-        
-        {/* 제목 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -88,13 +78,11 @@ export function ProgressSection() {
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="w-1 h-8 rounded bg-gradient-to-b from-cyan-400 to-purple-600" />
-            <h2 className="text-2xl sm:text-3xl font-bold">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
               현재 진행 상태
             </h2>
           </div>
-          <p className={darkMode ? "text-gray-400 ml-6" : "text-slate-500 ml-6"}>
-            프로젝트 진척도
-          </p>
+          <p className="text-gray-400 ml-6">프로젝트 진척도</p>
         </motion.div>
 
         {/* Progress Bar */}
@@ -102,24 +90,15 @@ export function ProgressSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className={`mb-12 p-6 rounded-2xl border ${
-            darkMode
-              ? "bg-slate-900 border-slate-700"
-              : "bg-slate-50 border-slate-200"
-          }`}
+          className="mb-12 p-6 rounded-2xl bg-white/5 border border-white/10"
         >
           <div className="flex items-center justify-between mb-4">
-            <span className="text-lg font-bold">전체 진행률</span>
+            <span className="text-lg font-bold text-white">전체 진행률</span>
             <span className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
               {percentage}%
             </span>
           </div>
-
-          <div
-            className={`h-4 rounded-full overflow-hidden ${
-              darkMode ? "bg-slate-700" : "bg-slate-200"
-            }`}
-          >
+          <div className="h-4 rounded-full bg-slate-700 overflow-hidden">
             <motion.div
               initial={{ width: 0 }}
               whileInView={{ width: `${percentage}%` }}
@@ -128,10 +107,7 @@ export function ProgressSection() {
               className="h-full rounded-full bg-gradient-to-r from-cyan-400 to-purple-500"
             />
           </div>
-
-          <div className={`flex justify-between mt-2 text-sm ${
-            darkMode ? "text-gray-400" : "text-slate-500"
-          }`}>
+          <div className="flex justify-between mt-2 text-sm text-gray-400">
             <span>완료: {completedItems}개</span>
             <span>전체: {totalItems}개</span>
           </div>
@@ -146,20 +122,15 @@ export function ProgressSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: catIndex * 0.1 }}
-              className={`p-6 rounded-2xl border ${
-                darkMode
-                  ? "bg-slate-900 border-slate-700"
-                  : "bg-white border-slate-200"
-              }`}
+              className={`p-6 rounded-2xl border ${category.bgColor}`}
             >
               <div className="flex items-center gap-3 mb-6">
                 <category.icon className={`w-6 h-6 ${category.color}`} />
-                <h3 className="text-lg font-bold">{category.title}</h3>
-                <span className="ml-auto text-sm font-bold">
+                <h3 className={`text-lg font-bold ${category.color}`}>{category.title}</h3>
+                <span className={`ml-auto text-sm font-bold ${category.color}`}>
                   {category.items.length}
                 </span>
               </div>
-
               <div className="space-y-3">
                 {category.items.map((item, index) => (
                   <motion.div
@@ -168,19 +139,11 @@ export function ProgressSection() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
-                    className={`p-3 rounded-lg ${
-                      darkMode
-                        ? "bg-slate-800"
-                        : "bg-slate-100"
-                    }`}
+                    className="p-3 rounded-lg bg-slate-900/30"
                   >
-                    <p className="text-sm font-medium">{item.text}</p>
+                    <p className="text-white text-sm">{item.text}</p>
                     {item.subtext && (
-                      <p className={`text-xs mt-1 ${
-                        darkMode ? "text-gray-400" : "text-slate-500"
-                      }`}>
-                        {item.subtext}
-                      </p>
+                      <p className="text-gray-500 text-xs mt-1">{item.subtext}</p>
                     )}
                   </motion.div>
                 ))}
@@ -192,3 +155,31 @@ export function ProgressSection() {
         {/* Infrastructure */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="p-6 rounded-2xl bg-white/5 border border-white/10"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <AlertCircle className="w-6 h-6 text-blue-400" />
+            <h3 className="text-lg font-bold text-white">인프라 현황</h3>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {infraData.map((item, index) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="p-4 rounded-xl bg-slate-900/50 text-center"
+              >
+                <p className="text-gray-500 text-xs mb-1">{item.label}</p>
+                <p className="text-cyan-400 font-mono text-sm break-all">{item.value}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
