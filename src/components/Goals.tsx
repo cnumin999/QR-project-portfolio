@@ -42,7 +42,7 @@ const expectedEffects = [
   "축적된 데이터의 외부 제공을 통한 수익 모델 확보 가능성",
 ];
 
-export function Goals() {
+export function Goals({ darkMode }: { darkMode: boolean }) {
   return (
     <section id="goals" className="py-20 px-4">
       <div className="max-w-7xl mx-auto">
