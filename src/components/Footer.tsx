@@ -18,7 +18,7 @@ const socialLinks = [
   {
     icon: Mail,
     label: "Email",
-    href: "mailto:your@email.com",
+    href: "mailto:cnumin999@gmail.com",
     color: "hover:text-red-400",
   },
 ];
@@ -54,7 +54,7 @@ export function Footer() {
           }`}>
             데이터 기반 시스템 구축, 풀스택 개발에 관심이 있습니다.
             <br />
-            새로운 기회에 열려 있으니 편하게 연락주세요!
+            새로운 기회에 도전하고 싶습니다! 연락주세요!
           </p>
           <motion.a
             href="mailto:your@email.com"
