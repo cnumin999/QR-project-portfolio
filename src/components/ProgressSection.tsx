@@ -110,9 +110,11 @@ export function ProgressSection() {
             />
           </div>
 
-          <div className={`flex justify-between mt-2 text-sm ${
-            darkMode ? "text-gray-400" : "text-slate-500"
-          }`}>
+          <div
+            className={`flex justify-between mt-2 text-sm ${
+              darkMode ? "text-gray-400" : "text-slate-500"
+            }`}
+          >
             <span>완료 {completedItems}개</span>
             <span>전체 {totalItems}개</span>
           </div>
