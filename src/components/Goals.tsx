@@ -42,9 +42,12 @@ const expectedEffects = [
   "축적된 데이터의 외부 제공을 통한 수익 모델 확보 가능성",
 ];
 
-export function Goals({ darkMode }: { darkMode: boolean }) {
+export function Goals() {
   return (
-    <section id="goals" className="py-20 px-4">
+    <section
+      id="goals"
+      className="py-20 px-4 text-black dark:text-white"
+    >
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -54,11 +57,13 @@ export function Goals({ darkMode }: { darkMode: boolean }) {
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="w-1 h-8 rounded bg-gradient-to-b from-cyan-400 to-purple-600" />
-            <h2 className={`text-2xl sm:text-3xl font-bold ${darkMode ? "text-white" : "text-slate-900"}`}>
+            <h2 className="text-2xl sm:text-3xl font-bold">
               프로젝트 최종 목표
             </h2>
           </div>
-          <p className={`ml-6 ${darkMode ? "text-gray-400" : "text-slate-600"}`}>Project Goals & Expected Effects</p>
+          <p className="text-gray-600 dark:text-gray-400 ml-6">
+            Project Goals & Expected Effects
+          </p>
         </motion.div>
 
         {/* Goals Grid */}
@@ -66,11 +71,15 @@ export function Goals({ darkMode }: { darkMode: boolean }) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative p-8 sm:p-12 rounded-3xl bg-gradient-to-br from-purple-500/20 to-cyan-500/20 border border-white/10 mb-12 overflow-hidden"
+          className="relative p-8 sm:p-12 rounded-3xl 
+                     bg-gray-100 dark:bg-gradient-to-br 
+                     dark:from-purple-500/20 dark:to-cyan-500/20
+                     border border-gray-200 dark:border-white/10 
+                     mb-12 overflow-hidden"
         >
-          {/* Background Glow */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl" />
+          {/* Background Glow (다크모드에서만 표시) */}
+          <div className="hidden dark:block absolute top-0 right-0 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl" />
+          <div className="hidden dark:block absolute bottom-0 left-0 w-64 h-64 bg-cyan-500/20 rounded-full blur-3xl" />
 
           <div className="relative grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
             {goals.map((goal, index) => (
@@ -83,11 +92,20 @@ export function Goals({ darkMode }: { darkMode: boolean }) {
                 whileHover={{ scale: 1.05, y: -5 }}
                 className="text-center group"
               >
-                <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${goal.color} flex items-center justify-center transform group-hover:rotate-6 transition-transform`}>
+                <div
+                  className={`w-16 h-16 mx-auto mb-4 rounded-2xl 
+                              bg-gradient-to-br ${goal.color} 
+                              flex items-center justify-center 
+                              transform group-hover:rotate-6 transition-transform`}
+                >
                   <goal.icon className="w-8 h-8 text-white" />
                 </div>
-                <h3 className={`font-bold mb-1 ${darkMode ? "text-white" : "text-slate-900"}`}>{goal.title}</h3>
-                <p className={`text-sm ${darkMode ? "text-gray-400" : "text-slate-600"}`}>{goal.desc}</p>
+                <h3 className="font-bold mb-1">
+                  {goal.title}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                  {goal.desc}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -98,12 +116,15 @@ export function Goals({ darkMode }: { darkMode: boolean }) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="p-6 sm:p-8 rounded-2xl bg-white/5 border border-white/10"
+          className="p-6 sm:p-8 rounded-2xl 
+                     bg-gray-100 dark:bg-white/5 
+                     border border-gray-200 dark:border-white/10"
         >
-          <h3 className={`text-xl font-bold mb-6 flex items-center gap-2 ${darkMode ? "text-white" : "text-slate-900"}`}>
-            <TrendingUp className="w-5 h-5 text-cyan-400" />
+          <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-cyan-500 dark:text-cyan-400" />
             기대 효과
           </h3>
+
           <div className="space-y-4">
             {expectedEffects.map((effect, index) => (
               <motion.div
@@ -112,12 +133,20 @@ export function Goals({ darkMode }: { darkMode: boolean }) {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="flex items-start gap-3 p-4 rounded-xl bg-slate-900/50 hover:bg-slate-900/70 transition-colors"
+                className="flex items-start gap-3 p-4 rounded-xl 
+                           bg-white dark:bg-slate-900/50 
+                           hover:bg-gray-200 dark:hover:bg-slate-900/70 
+                           transition-colors"
               >
-                <span className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 flex items-center justify-center text-xs font-bold text-slate-900 shrink-0">
+                <span className="w-6 h-6 rounded-full 
+                                 bg-gradient-to-r from-cyan-400 to-purple-500 
+                                 flex items-center justify-center 
+                                 text-xs font-bold text-slate-900 shrink-0">
                   {index + 1}
                 </span>
-                <p className={darkMode ? "text-gray-300" : "text-slate-700"}>{effect}</p>
+                <p className="text-gray-700 dark:text-gray-300">
+                  {effect}
+                </p>
               </motion.div>
             ))}
           </div>
