@@ -56,7 +56,7 @@ const progressData: ProgressCategory[] = [
 ];
 
 const infraData = [
-  { label: "서비스 URL", value: "http://127.0.0.1:3000" },
+  { label: "서비스 URL", value: "http://0.0.0.0:xxxx" },
   { label: "서버 OS", value: "Windows Server" },
   { label: "데이터베이스", value: "MySQL" },
   { label: "웹 서버", value: "Node.js (Express)" },
