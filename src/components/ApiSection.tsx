@@ -1,84 +1,113 @@
 import { motion } from "framer-motion";
-import { Zap } from "lucide-react";
+import { Globe } from "lucide-react";
 
-type HttpMethod = "GET" | "POST" | "DELETE";
-
-interface ApiEndpoint {
-  method: HttpMethod;
-  path: string;
-  desc: string;
+interface ApiSectionProps {
+  darkMode: boolean;
 }
 
-const endpoints: ApiEndpoint[] = [
+const apis = [
   { method: "POST", path: "/api/admin/production/serial", desc: "생산 시리얼 저장" },
   { method: "GET", path: "/api/admin/production/list", desc: "생산 목록 조회" },
   { method: "POST", path: "/api/admin/inspection/report", desc: "QC 리포트 저장" },
   { method: "GET", path: "/api/admin/inspection/report/:serial", desc: "QC 리포트 조회" },
   { method: "GET", path: "/api/export/excel/:serial", desc: "엑셀 성적서 다운로드" },
-  { method: "GET", path: "/api/scan/qr-scan/:serial", desc: "QR 스캔 (로그 기록 + 리다이렉트)" },
-  { method: "GET", path: "/api/product-history/:serial", desc: "제품 통합 이력 조회" },
+  { method: "GET", path: "/api/scan/qr-scan/:serial", desc: "QR 스캔 처리" },
+  { method: "GET", path: "/api/product-history/:serial", desc: "제품 이력 조회" },
   { method: "POST", path: "/api/feedback", desc: "피드백 제출" },
-  { method: "GET", path: "/api/admin/analysis/keywords", desc: "키워드 분석 결과 조회" },
+  { method: "GET", path: "/api/admin/analysis/keywords", desc: "키워드 분석 결과" },
   { method: "DELETE", path: "/api/admin/production/serial/:serial", desc: "생산 데이터 삭제" },
 ];
 
-const methodColors: Record<HttpMethod, string> = {
+const methodColors: Record<string, string> = {
   GET: "bg-emerald-500",
-  POST: "bg-violet-500",
+  POST: "bg-blue-500",
   DELETE: "bg-rose-500",
 };
 
-export function ApiSection() {
+export function ApiSection({ darkMode }: ApiSectionProps) {
   return (
-    <section id="api" className="py-20 px-4">
-      <div className="max-w-7xl mx-auto">
+    <section className={`py-20 ${darkMode ? "" : ""}`}>
+      <div className="container mx-auto px-6">
         <motion.div
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-12"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-1 h-8 rounded bg-gradient-to-b from-cyan-400 to-purple-600" />
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">
-              주요 API 엔드포인트
-            </h2>
-          </div>
-          <p className="text-gray-400 ml-6">RESTful API 설계</p>
+          <h2
+            className={`text-3xl md:text-4xl font-bold mb-4 ${
+              darkMode ? "text-white" : "text-slate-900"
+            }`}
+          >
+            API 엔드포인트
+          </h2>
+          <p className={darkMode ? "text-slate-400" : "text-slate-600"}>
+            주요 REST API 목록
+          </p>
         </motion.div>
 
-        <div className="p-6 sm:p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
+        <motion.div
+          className={`p-8 rounded-3xl ${
+            darkMode
+              ? "bg-slate-800/50 border border-slate-700/50"
+              : "bg-white border border-slate-200 shadow-xl"
+          }`}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
           <div className="flex items-center gap-3 mb-6">
-            <Zap className="w-6 h-6 text-yellow-400" />
-            <h3 className="text-lg font-bold text-white">Express.js Routes</h3>
+            <Globe className={darkMode ? "text-cyan-400" : "text-cyan-600"} />
+            <h3
+              className={`text-xl font-bold ${
+                darkMode ? "text-white" : "text-slate-900"
+              }`}
+            >
+              RESTful API
+            </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {endpoints.map((endpoint, index) => (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {apis.map((api, index) => (
               <motion.div
-                key={endpoint.path}
-                initial={{ opacity: 0, y: 20 }}
+                key={api.path}
+                className={`p-4 rounded-xl ${
+                  darkMode
+                    ? "bg-slate-900/50 hover:bg-slate-900/80"
+                    : "bg-slate-50 hover:bg-slate-100"
+                } transition-colors`}
+                initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
-                whileHover={{ scale: 1.02, x: 5 }}
-                className="p-4 rounded-xl bg-slate-900/50 border border-white/5 hover:border-cyan-400/30 transition-colors"
               >
-                <div className="flex items-start gap-3">
-                  <span className={`px-2 py-1 rounded text-xs font-bold ${methodColors[endpoint.method]} text-white shrink-0`}>
-                    {endpoint.method}
+                <div className="flex items-center gap-3 mb-2">
+                  <span
+                    className={`px-2.5 py-1 rounded text-xs font-bold text-white ${
+                      methodColors[api.method]
+                    }`}
+                  >
+                    {api.method}
                   </span>
-                  <div className="min-w-0">
-                    <code className="block text-cyan-400 font-mono text-sm break-all mb-1">
-                      {endpoint.path}
-                    </code>
-                    <p className="text-gray-500 text-xs">{endpoint.desc}</p>
-                  </div>
+                  <span
+                    className={`text-xs ${
+                      darkMode ? "text-slate-500" : "text-slate-400"
+                    }`}
+                  >
+                    {api.desc}
+                  </span>
                 </div>
+                <code
+                  className={`text-sm font-mono break-all ${
+                    darkMode ? "text-cyan-400" : "text-cyan-600"
+                  }`}
+                >
+                  {api.path}
+                </code>
               </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
