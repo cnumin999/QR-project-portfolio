@@ -54,11 +54,11 @@ export function Goals() {
         >
           <div className="flex items-center gap-3 mb-4">
             <div className="w-1 h-8 rounded bg-gradient-to-b from-cyan-400 to-purple-600" />
-            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+            <h2 className={`text-2xl sm:text-3xl font-bold ${darkMode ? "text-white" : "text-slate-900"}`}>
               프로젝트 최종 목표
             </h2>
           </div>
-          <p className="text-gray-400 ml-6">Project Goals & Expected Effects</p>
+          <p className={`ml-6 ${darkMode ? "text-gray-400" : "text-slate-600"}`}>Project Goals & Expected Effects</p>
         </motion.div>
 
         {/* Goals Grid */}
@@ -86,8 +86,8 @@ export function Goals() {
                 <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${goal.color} flex items-center justify-center transform group-hover:rotate-6 transition-transform`}>
                   <goal.icon className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-white font-bold mb-1">{goal.title}</h3>
-                <p className="text-gray-400 text-sm">{goal.desc}</p>
+                <h3 className={`font-bold mb-1 ${darkMode ? "text-white" : "text-slate-900"}`}>{goal.title}</h3>
+                <p className={`text-sm ${darkMode ? "text-gray-400" : "text-slate-600"}`}>{goal.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -100,7 +100,7 @@ export function Goals() {
           viewport={{ once: true }}
           className="p-6 sm:p-8 rounded-2xl bg-white/5 border border-white/10"
         >
-          <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+          <h3 className={`text-xl font-bold mb-6 flex items-center gap-2 ${darkMode ? "text-white" : "text-slate-900"}`}>
             <TrendingUp className="w-5 h-5 text-cyan-400" />
             기대 효과
           </h3>
@@ -117,7 +117,7 @@ export function Goals() {
                 <span className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 flex items-center justify-center text-xs font-bold text-slate-900 shrink-0">
                   {index + 1}
                 </span>
-                <p className="text-gray-300">{effect}</p>
+                <p className={darkMode ? "text-gray-300" : "text-slate-700"}>{effect}</p>
               </motion.div>
             ))}
           </div>
